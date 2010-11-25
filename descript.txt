@@ -1,25 +1,25 @@
-//•¶šƒR[ƒh
-Charset,Shift_JIS
+//æ–‡å­—ã‚³ãƒ¼ãƒ‰
+Charset,UTF-8
 
-//–¼‘O
+//åå‰
 name,DauMaker
 
-//ìÒ
-//craftmanw‚Í“ú–{Œê‚à‰ÂAcraftman‚Í‰pŒê‚Ì‚İB‚Ç‚Á‚¿‚©•Ğ•û‚Å‚àOK
+//ä½œè€…
+//craftmanwã¯æ—¥æœ¬èªã‚‚å¯ã€craftmanã¯è‹±èªã®ã¿ã€‚ã©ã£ã¡ã‹ç‰‡æ–¹ã§ã‚‚OK
 craftman,Don
 //craftmanw
 
 //PLUGIN DLL
 filename,yaya.dll
 
-//ƒIƒvƒVƒ‡ƒ“w’è-OnSecondChange‚Ì’Ê’m•p“x
-//0‚Å–³ŒøA•W€1
+//ã‚ªãƒ—ã‚·ãƒ§ãƒ³æŒ‡å®š-OnSecondChangeã®é€šçŸ¥é »åº¦
+//0ã§ç„¡åŠ¹ã€æ¨™æº–1
 secondchangeinterval,0
 
-//ƒvƒ‰ƒOƒCƒ“ID
-//http://www.famkruithof.net/uuid/uuidgen ‚Æ‚©‚Å¶¬‚Å‚«‚Ü‚·
-//ˆê“x‘‚¢‚½‚ç•Ï‚¦‚È‚¢‚±‚Æ
+//ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ID
+//http://www.famkruithof.net/uuid/uuidgen ã¨ã‹ã§ç”Ÿæˆã§ãã¾ã™
+//ä¸€åº¦æ›¸ã„ãŸã‚‰å¤‰ãˆãªã„ã“ã¨
 id,bb48de60-ea37-11df-98cf-0800200c9a66
 
-//XVURL
-homeurl,https://github.com/nikolat/daumaker/blob/master/
+//æ›´æ–°URL
+homeurl,https://github.com/nikolat/daumaker/raw/master/
