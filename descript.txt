@@ -22,4 +22,4 @@ secondchangeinterval,0
 id,bb48de60-ea37-11df-98cf-0800200c9a66
 
 //XVURL
-//homeurl,
+homeurl,https://github.com/nikolat/daumaker/blob/master/
