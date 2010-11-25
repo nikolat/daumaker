@@ -1,0 +1,25 @@
+//文字コード
+Charset,Shift_JIS
+
+//名前
+name,DauMaker
+
+//作者
+//craftmanwは日本語も可、craftmanは英語のみ。どっちか片方でもOK
+craftman,Don
+//craftmanw
+
+//PLUGIN DLL
+filename,yaya.dll
+
+//オプション指定-OnSecondChangeの通知頻度
+//0で無効、標準1
+secondchangeinterval,0
+
+//プラグインID
+//http://www.famkruithof.net/uuid/uuidgen とかで生成できます
+//一度書いたら変えないこと
+id,bb48de60-ea37-11df-98cf-0800200c9a66
+
+//更新URL
+//homeurl,

@@ -1,0 +1,123 @@
+// ****使い方****
+// 
+// 関数名はイベント名そのままです。SHIORI/3.0テンプレートのように、
+// 文字列取得時頭にOn_がつくようなことはありません。
+// 
+// 値を返すとその内容をSakuraScriptとして実行します
+// 以下の変数に代入すると、動作を制御できます。
+//
+//   res_event , res_reference[0]...[n]
+//     指定したイベントをReferenceつきで発生します。referenceは省略可
+//
+//   res_target
+//     スクリプトやイベントをどのゴーストに送るかを指定します。
+//     Sakura名を指定してください。また、__SYSTEM_ALL_GHOST__で全起動中ゴーストに通知します。
+//     省略すると「プラグインメニューを実行したゴースト」に送ります
+//
+//   res_marker
+//     バルーンのマーカー(下に小さく出るステータス表示)に表示する文字を指定できます。
+//
+//   res_event_option / res_script_option
+//     それぞれ、EventOption / ScriptOptionヘッダを設定します。
+//
+// 詳しくはプラグイン仕様書を参照してください。
+// http://emily.shillest.net/specwiki/index.php?PLUGIN%2F2.0%2F%E4%BB%95%E6%A7%98%E6%9B%B8
+// 
+
+OnMenuExec
+{
+	"\![get,property,OnGetGhostPathFromPlugin,ghostlist(%(sender)).path]\e"
+
+	res_event = 'OnPluginExec'
+	res_reference[0] = "Version=%(version())"
+	res_reference[1] = 'From=DauMaker'
+}
+
+OnGetGhostPathFromPlugin
+{
+	_path = reference[0]
+	sys.fnc.MakeUpdates2Dau(SUBSTR(_path, 0, STRLEN(_path) - 1))
+
+	res_event = 'OnUpdatedataCreated'
+	res_marker = version()
+}
+
+sys.fnc.MakeUpdates2Dau
+{
+	_path = _argv[0]
+	_delim = CHR(0x01)
+	_ignore = sys.fnc.getIgnoeFiles(_path, _delim)
+	_files = SPLIT(sys.fnc.getUpdateFiles(_path, _delim, _ignore), _delim)
+	_fname = _path + '\updates2.dau'
+	if !FOPEN(_fname, 'w')
+		return
+	foreach _files; _f {
+		_relative_path = REPLACE(REPLACE(_f, _path + '\', ''), '\', '/')
+		_hash = TOLOWER(FDIGEST(_f, 'MD5'))
+		FWRITE(_fname, _relative_path + CHR(0x01) + _hash + CHR(0x01))
+	}
+	FCLOSE(_fname)
+}
+
+sys.fnc.getUpdateFiles
+{
+	_path = _argv[0]
+	_delim = _argv[1]
+	_ignorestr = _argv[2]
+
+	_ignores = SPLIT(_ignorestr, _delim)
+	if !_ignorestr; _ignores = IARRAY() // for bug of YAYA-Tc 539-2
+	_ignore_default = '\\profile|\\var|updates2\.dau|update\.txt|ngm\.dat'
+
+	_fenum = FENUM(_path, _delim)
+	if !_fenum; return
+	_fs = SPLIT(_fenum, _delim)
+	_ret = ''
+	foreach _fs; _f {
+		if RE_MATCH(_f, _ignore_default); continue
+		_sub_ret = ''
+		if SUBSTR(_f, 0, 1) == '\' {
+			if ASEARCH(_path + _f + '\', _ignores) >= 0; continue
+			_sub_ret = sys.fnc.getUpdateFiles(_path + _f, _delim, _ignorestr)
+			if !_sub_ret; continue
+		}
+		else {
+			if ASEARCH(_path + '\' + _f, _ignores) >= 0; continue
+			_sub_ret = _path + '\' + _f
+		}
+		if _ret != ''; _ret += _delim
+		_ret += _sub_ret
+	}
+	_ret
+}
+
+sys.fnc.getIgnoeFiles
+{
+	_path = _argv[0]
+	_delim = _argv[1]
+
+	_fname = _path + '\developer_options.txt'
+	if !FOPEN(_fname, 'r')
+		return
+
+	_ret = ''
+	while 1 {
+		if (_line = FREAD(_fname)) == -1; break
+		_params = IARRAY()
+		foreach _line; _l {
+			_params ,= CUTSPACE(_l)
+		}
+		if ASEARCH('noupdate', _params) >= 1 {
+			if _ret != ''; _ret += _delim
+			_ret += REPLACE(_path + '\' + _params[0], '/', '\')
+		}
+	}
+	FCLOSE(_fname)
+
+	_ret
+}
+
+version
+{
+	'DauMaker/1.0'
+}
